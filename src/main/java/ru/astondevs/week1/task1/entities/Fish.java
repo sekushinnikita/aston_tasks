@@ -8,4 +8,9 @@ public class Fish extends Animal implements IArial {
     public String liveIn() {
         return "Water";
     }
+
+    @Override
+    protected void breath() {
+        System.out.println("Breath with gills");
+    }
 }
