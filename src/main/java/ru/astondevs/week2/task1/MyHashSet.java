@@ -2,8 +2,8 @@ package ru.astondevs.week2.task1;
 
 import java.util.Arrays;
 
-public class MyHashSet<E> {
-    private static final int INITIAL_CAPACITY = 100;
+public class MyHashSet<T> implements Cloneable{
+    private static final int INITIAL_CAPACITY = 10;
     private Object[] table;
     private int size;
 
@@ -12,60 +12,55 @@ public class MyHashSet<E> {
         this.size = 0;
     }
 
-    private int hash(E element) {
-        return (element == null) ? 0 : Math.abs(element.hashCode() % table.length);
-    }
-
-    public boolean add(E element) {
-        if (contains(element)) {
-            return false;
-        }
-        if (size >= table.length * 0.75) {
-            resize();
-        }
-        int index = hash(element);
-        while (table[index] != null) {
-            index = (index + 1) % table.length;
-        }
-        table[index] = element;
-        size++;
-        return true;
-    }
-
-    public boolean remove(E element) {
-        int index = hash(element);
-        while (table[index] != null) {
-            if (table[index].equals(element)) {
-                table[index] = null;
-                size--;
+    public boolean contains(T element) {
+        for (int i=0;i<INITIAL_CAPACITY;i++){
+            if (table[i] == element)
                 return true;
-            }
-            index = (index + 1) % table.length;
         }
         return false;
     }
 
-    public boolean contains(E element) {
-        int index = hash(element);
-        while (table[index] != null) {
-            if (table[index].equals(element)) {
+    public boolean add(T element) {
+        if (contains(element)) {
+            return false;
+        }
+        if (size >= table.length) {
+            resize();
+        }
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] == null) {
+                table[i] = element;
+                size++;
                 return true;
             }
-            index = (index + 1) % table.length;
+        }
+        return false;
+    }
+
+    public boolean remove(T element) {
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] != null && table[i].equals(element)) {
+                table[i] = null;
+                size--;
+                return true;
+            }
         }
         return false;
     }
 
     private void resize() {
-        Object[] oldTable = table;
-        table = new Object[oldTable.length * 2];
-        size = 0;
-
-        for (Object element : oldTable) {
-            if (element != null) {
-                add((E) element);
+        Object[] newTable = new Object[table.length * 2];
+        for (Object obj : table) {
+            if (obj != null) {
+                for (int i = 0; i < newTable.length; i++) {
+                    if (newTable[i] == null) {
+                        newTable[i] = obj;
+                        break;
+                    }
+                }
             }
         }
+        table = newTable;
     }
 
     public int size() {
@@ -76,8 +71,17 @@ public class MyHashSet<E> {
         return size == 0;
     }
 
-    public void clear() {
+    public void clearAll() {
         Arrays.fill(table, null);
         size = 0;
+    }
+
+    @Override
+    public MyHashSet<T> clone() {
+        try {
+            return (MyHashSet<T>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

@@ -1,12 +1,41 @@
 package ru.astondevs.week2.task2;
 
-class Book {
-    private final String title;
-    private final String author;
+import com.github.javafaker.Faker;
 
-    public Book(String title, String author) {
-        this.title = title;
-        this.author = author;
+import java.util.Scanner;
+
+public class Book {
+    private String title;
+    private String author;
+    private Integer year;
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final Faker faker = new Faker();
+
+    private Book(){}
+
+    public static Book createBookManually() {
+        System.out.println("Enter book title: ");
+        String title = scanner.nextLine();
+        System.out.println("Enter book author: ");
+        String author = scanner.nextLine();
+        System.out.println("Enter book author: ");
+        Integer year = scanner.nextInt();
+        return createBook(title, author, year);
+    }
+
+    public static Book createBookRandom() {
+        String title = faker.book().title();
+        String author = faker.book().author();
+        Integer year = faker.number().numberBetween(1997,2005);
+        return createBook(title, author, year);
+    }
+
+    private static Book createBook(String title, String author, Integer year) {
+        Book book = new Book();
+        book.title = title;
+        book.author = author;
+        book.year = year;
+        return book;
     }
 
     public String getTitle() {
@@ -20,13 +49,16 @@ class Book {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Book)) return false;
-        Book book = (Book) obj;
+        if (!(obj instanceof Book book)) return false;
         return title.equals(book.title) && author.equals(book.author);
     }
 
     @Override
     public int hashCode() {
         return title.hashCode() + author.hashCode();
+    }
+
+    public Integer getYear() {
+        return year;
     }
 }

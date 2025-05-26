@@ -1,98 +1,84 @@
 package ru.astondevs.week2.task1;
 
-public class MyLinkedList<E> {
-    private Node<E> head;
-    private Node<E> tail;
+public class MyLinkedList<T> implements Cloneable{
+    private T data;
+    private MyLinkedList<T> next;
+
+    public MyLinkedList(T data) {
+        this.data = data;
+        this.next = null;
+    }
+
+    private MyLinkedList<T> head;
     private int size;
 
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-
-        Node(E data) {
-            this.data = data;
-        }
-    }
-
     public MyLinkedList() {
-        head = null;
-        tail = null;
-        size = 0;
+        this.head = null;
+        this.size = 0;
     }
 
-    public void add(E element) {
-        Node<E> newNode = new Node<>(element);
-        if (tail == null) {
-            head = newNode;
-            tail = newNode;
+    public void add(T element) {
+        if (head == null) {
+            head = new MyLinkedList<>(element);
         } else {
-            tail.next = newNode;
-            tail = newNode;
-        }
-        size++;
-    }
-
-    public void add(int index, E element) {
-        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
-        Node<E> newNode = new Node<>(element);
-        if (index == 0) {
-            newNode.next = head;
-            head = newNode;
-            if (tail == null) tail = newNode;
-        } else {
-            Node<E> current = head;
-            for (int i = 0; i < index - 1; i++) {
+            MyLinkedList<T> current = head;
+            while (current.next != null) {
                 current = current.next;
             }
-            newNode.next = current.next;
-            current.next = newNode;
-            if (newNode.next == null) tail = newNode;
+            current.next = new MyLinkedList<>(element);
         }
         size++;
     }
 
-    public E get(int index) {
-        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
-        Node<E> current = head;
-        for (int i = 0; i < index; i++) {
+    public boolean contains(T element) {
+        MyLinkedList<T> current = head;
+        while (current != null) {
+            if ((current.data == null && element == null)
+                || (current.data != null && current.data.equals(element))) {
+                return true;
+            }
             current = current.next;
         }
-        return current.data;
+        return false;
     }
 
-    public E remove(int index) {
-        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
-        if (index == 0) {
-            E data = head.data;
+    public boolean remove(T element) {
+        if (head == null) return false;
+
+        if ((head.data == null && element == null) || (head.data != null && head.data.equals(element))) {
             head = head.next;
-            if (head == null) tail = null;
             size--;
-            return data;
-        } else {
-            Node<E> current = head;
-            for (int i = 0; i < index - 1; i++) {
-                current = current.next;
-            }
-            E data = current.next.data;
-            current.next = current.next.next;
-            if (current.next == null) tail = current;
-            size--;
-            return data;
+            return true;
         }
+
+        MyLinkedList<T> current = head;
+        while (current.next != null) {
+            if ((current.next.data == null && element == null)
+                || (current.next.data != null && current.next.data.equals(element))) {
+                current.next = current.next.next;
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
+        return false; // не найдено
     }
 
     public int size() {
         return size;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    public void clear() {
+    public void clearAll() {
         head = null;
-        tail = null;
         size = 0;
     }
-}
 
+    @Override
+    public MyLinkedList<T> clone() {
+        try {
+            return (MyLinkedList) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
+    }
+}

@@ -1,24 +1,31 @@
 package ru.astondevs.week2.task2;
 
-import ru.astondevs.week2.task1.MyHashSet;
+import com.github.javafaker.Faker;
 
-import java.awt.print.Book;
 import java.util.List;
+import java.util.Objects;
 
 public class Student {
-    private MyHashSet<Book> books;
+    private String name;
+    private List<Book> books;
+    private static final Faker faker = new Faker();
 
-    public Student(List<Book> books) {
-        if (books.size() < 5) {
-            throw new IllegalArgumentException("Student must have at least 5 books.");
-        }
-        this.books = new MyHashSet<>();
-        for (Book book : books) {
-            this.books.add(book);
+    public Student() {
+        for (int i = 0; i<5; i++){
+            this.books.add(Objects.requireNonNull(Book.createBookRandom()));
+            this.name = faker.book().author();
         }
     }
 
-    public MyHashSet<Book> getBooks() {
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", books=" + books +
+                '}';
+    }
+
+    public List<Book> getBooks() {
         return books;
     }
 }
