@@ -2,6 +2,7 @@ package ru.astondevs.week2.task2;
 
 import com.github.javafaker.Faker;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,8 +12,9 @@ public class Student {
     private static final Faker faker = new Faker();
 
     public Student() {
+        books = new ArrayList<>();
         for (int i = 0; i<5; i++){
-            this.books.add(Objects.requireNonNull(Book.createBookRandom()));
+            books.add(Objects.requireNonNull(Book.createBookRandom()));
             this.name = faker.book().author();
         }
     }
