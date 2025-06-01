@@ -23,9 +23,16 @@
         <maven-surefire-plugin.version>3.0.0-M7</maven-surefire-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <javafaker.version>1.0.2</javafaker.version>
+        <mysql.connector.version>9.3.0</mysql.connector.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>${mysql.connector.version}</version>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

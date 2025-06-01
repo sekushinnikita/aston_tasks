@@ -1,34 +1,17 @@
 package ru.astondevs;
 
-import ru.astondevs.week2.task2.Book;
-import ru.astondevs.week2.task2.Student;
+import ru.astondevs.week3.MyIO;
+import ru.astondevs.week3.MySQLConnection;
 
-import java.util.ArrayList;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.Connection;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Student> students = new ArrayList<>();
-        for (int i = 0; i<5; i++){
-            students.add(new Student());
-        }
-        students.stream()
-                .peek(System.out::println)
-                .flatMap(student -> student.getBooks().stream())
-                .sorted()
-                .distinct()
-                .filter(book -> {
-                    try {
-                        return book.getYear() > 2001;
-                    } catch (Exception e) {
-                        return false;
-                    }
-                })
-                .limit(3)
-                .map(Book::getYear)
-                .findFirst()
-                .ifPresentOrElse(
-                        year -> System.out.println("Year of chosen book: " + year),
-                        () -> System.out.println("Book's been found.")
-                );
+        /*MyIO.rewriteToFile("так я чет не понял");
+        MyIO.writeToFile("так я чет не понял");*/
+        MySQLConnection mySQLConnection = new MySQLConnection();
+        Connection connection = mySQLConnection.getConnection();
     }
 }
