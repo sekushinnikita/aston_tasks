@@ -3,6 +3,7 @@ package ru.astondevs.week4.task1;
 public class MyDeadlockPersonQueue extends Thread {
     private final Object lock1;
     private final Object lock2;
+    private static final int SLEEP_TIME = 50;
 
     public MyDeadlockPersonQueue(Object lock1, Object lock2) {
         this.lock1 = lock1;
@@ -13,7 +14,7 @@ public class MyDeadlockPersonQueue extends Thread {
         try {
             synchronized (lock1) {
                 System.out.println(Thread.currentThread().getName() + " capture " + lock1);
-                Thread.sleep(50);
+                Thread.sleep(SLEEP_TIME);
                 synchronized (lock2) {
                     System.out.println(Thread.currentThread().getName() + " capture " + lock2);
                 }

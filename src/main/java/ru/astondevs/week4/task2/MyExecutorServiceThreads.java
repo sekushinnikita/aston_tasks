@@ -7,9 +7,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MyExecutorServiceThreads {
     private static final ExecutorService executor;
     private static final AtomicBoolean volatileThreadFlag;
+    private static final int SLEEP_TIME = 50;
+    private static final int COUNT_OF_THREADS = 2;
 
     static {
-        executor = Executors.newFixedThreadPool(2);
+        executor = Executors.newFixedThreadPool(COUNT_OF_THREADS);
         volatileThreadFlag = new AtomicBoolean(true);
     }
 
@@ -21,7 +23,7 @@ public class MyExecutorServiceThreads {
                     volatileThreadFlag.set(false);
                 }
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(SLEEP_TIME);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -34,7 +36,7 @@ public class MyExecutorServiceThreads {
                     volatileThreadFlag.set(true);
                 }
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(SLEEP_TIME);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

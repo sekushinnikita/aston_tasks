@@ -1,6 +1,7 @@
 package ru.astondevs.week4.task1;
 
 public class MyLivelockPersonQueue {
+    private static final int SLEEP_TIME = 50;
 
     public static class NarrowPassage {
         private volatile boolean firstPersonPriority = true;
@@ -45,7 +46,7 @@ public class MyLivelockPersonQueue {
 
     private static void sleep() {
         try {
-            Thread.sleep(50);
+            Thread.sleep(SLEEP_TIME);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
