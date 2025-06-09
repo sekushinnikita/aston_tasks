@@ -2,7 +2,7 @@ package ru.astondevs.week4.task1;
 
 public class MyLivelockPersonQueue {
 
-    static class NarrowPassage {
+    public static class NarrowPassage {
         private volatile boolean firstPersonPriority = true;
         private volatile boolean secondPersonPriority = true;
 

@@ -28,11 +28,11 @@ public class MyDeadlockPersonQueue extends Thread {
         Object firstPersonLock2 = new Object();
         Object secondPersonLock1 = firstPersonLock1;
         Object secondPersonLock2 = firstPersonLock2;
-        Thread personA = new MyDeadlockPersonQueue(firstPersonLock1, firstPersonLock2);
-        personA.setName("First person");
-        Thread personB = new MyDeadlockPersonQueue(secondPersonLock2, secondPersonLock1);
-        personB.setName("Second person");
-        personA.start();
-        personB.start();
+        Thread firstPerson = new MyDeadlockPersonQueue(firstPersonLock1, firstPersonLock2);
+        firstPerson.setName("First person");
+        Thread secondPerson = new MyDeadlockPersonQueue(secondPersonLock2, secondPersonLock1);
+        secondPerson.setName("Second person");
+        firstPerson.start();
+        secondPerson.start();
     }
 }

@@ -43,4 +43,12 @@ public class MyExecutorServiceThreads {
         executor.submit(task1);
         executor.submit(task2);
     }
+
+    public static ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public static boolean isVolatileThreadFlag() {
+        return volatileThreadFlag.get();
+    }
 }
