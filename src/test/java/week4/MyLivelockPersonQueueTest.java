@@ -1,3 +1,5 @@
+package week4;
+
 import org.junit.jupiter.api.Test;
 import ru.astondevs.week4.task1.MyLivelockPersonQueue;
 
